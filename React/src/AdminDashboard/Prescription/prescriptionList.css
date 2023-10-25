@@ -1,0 +1,19 @@
+.ScrollViewPatienList {
+    max-height: 800px;
+    overflow-y: auto;
+   
+}
+
+.table1{
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+.scroll{
+   
+    max-height: 100vh;
+    overflow-y: auto;
+    margin-left: -10px;
+    border-left: 12px solid #2192FF;
+
+}

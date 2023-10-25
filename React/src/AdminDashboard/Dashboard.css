@@ -1,0 +1,513 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: -webkit-fill-available;
+}
+
+
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100vh;
+
+}
+
+
+.title {
+
+    font-weight: bold;
+    font-size: 25px;
+    margin-left: 18px;
+
+}
+
+/* for all icons */
+.Icon {
+    margin-right: 20px;
+    margin-left: 5px;
+}
+
+.Icon1 {
+    margin-left: 52px;
+}
+
+.Icon2 {
+    margin-left: 80px;
+}
+
+.Icon3 {
+    margin-left: 81px;
+}
+
+.Icon4 {
+    margin-left: 6vh;
+}
+
+.Icon5 {
+    margin-left: 12px;
+}
+
+.Icon6 {
+    margin-left: 6vh;
+}
+
+.Icon7 {
+    margin-left: 4.5vh;
+}
+
+.Icon8 {
+    margin-left: 9vh;
+}
+
+
+/* nav bar*/
+.bar {
+
+    background-color: #2192FF;
+    border: 1px solid #00C4FF;
+    color: aliceblue;
+    width: 100px;
+    min-height: 100vh;
+}
+
+.row {
+    background-color: rgb(253, 250, 251);
+
+}
+
+/* home page design */
+.home {
+    margin-bottom: 2.32em;
+}
+
+.home:hover {
+    cursor: pointer;
+    color: rgb(165, 60, 18);
+}
+
+/* scroll view for appointment */
+.ScrollViewAppoint {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* scroll the nav */
+.scroll-nav {
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+/* card scrollimg */
+
+.colScrollView {
+    max-height: 100vh;
+    overflow-y: auto;
+    margin-left: -10px;
+    border-left: 12px solid #2192FF;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* card design margin-left:-15px;*/
+
+.customCard {
+    /* Replace with your desired background color */
+    margin-left: 50px;
+    background: linear-gradient(to right, #2b90ef, #959798);
+    box-shadow: 0px 0px 5px 0px;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+/* card header */
+
+.cardHeader {
+    background: linear-gradient(to right, #f7fbff, #f9f9f9);
+}
+
+/* table 1*/
+
+.table1 {
+    margin-left: 100px;
+
+}
+
+.table2 {
+    margin-left: 50px;
+    margin-bottom: 20px;
+
+
+}
+
+.table3 {
+    margin-left: 80px;
+    margin-bottom: 15vh;
+
+}
+
+th {
+    font-size: 18px;
+    padding: 10px;
+}
+/* i used media for responsible for all devices */
+
+/* Styles for screens smaller than 576px (e.g., mobile devices) */
+
+/* Styles for screens between 576px and 992px (e.g., tablets) */
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .bar {
+        /* Adjust the styles as per your requirements */
+        padding: 20px;
+        height: auto;
+    }
+
+    .title {
+        font-size: 22px;
+        margin-left: 15px;
+    }
+
+    /* Rest of your responsive styles */
+
+    .Icon {
+        margin-right: 2px;
+        margin-left: 2px;
+    }
+
+    .Icon1 {
+        margin-left: 45px;
+    }
+
+    .Icon2 {
+        margin-left: 71px;
+    }
+
+    .Icon3 {
+        margin-left: 71px;
+    }
+
+    .Icon4 {
+        margin-left: 36px;
+    }
+
+    .Icon5 {
+        margin-left: 5px;
+    }
+
+    .Icon6 {
+        margin-left: 37px;
+    }
+
+    .Icon7 {
+        margin-left: 28px;
+    }
+
+    .Icon8 {
+        margin-left: 61px;
+    }
+
+    .home {
+        margin-bottom: 1.25em;
+    }
+
+    .table1 {
+        margin-left: 7vw;
+        margin-top: 4vh;
+
+    }
+
+    .table2 {
+        margin-left: 50px;
+        margin-bottom: 20px;
+
+
+    }
+
+    .table3 {
+        margin-left: 50px;
+        margin-bottom: 8vh;
+    }
+
+    .customCard {
+        margin-bottom: 5vh;
+    }
+
+    .navItem {
+        margin-top: -5vh;
+        width: 33vw;
+    }
+}
+
+/* Styles for screens larger than 992px (e.g., desktops) */
+@media screen and (min-width: 769px) and (max-width: 992px) {
+
+    .customCard {
+        margin-bottom: 5vh;
+    }
+
+
+    .table1 {
+        margin-left: 7vw;
+        margin-top: 4vh;
+
+    }
+
+    .table2 {
+        margin-left: 50px;
+        margin-bottom: 20px;
+
+
+    }
+
+    .table3 {
+        margin-left: 50px;
+        margin-bottom: 50vh;
+    }
+
+    .Icon1 {
+        margin-left: 55px;
+    }
+
+    .Icon2 {
+        margin-left: 81px;
+    }
+
+    .Icon3 {
+        margin-left: 81px;
+    }
+
+    .Icon4 {
+        margin-left: 46px;
+    }
+
+    .Icon5 {
+        margin-left: 15px;
+    }
+
+    .Icon6 {
+        margin-left: 47px;
+    }
+
+    .Icon7 {
+        margin-left: 38px;
+    }
+
+    .Icon8 {
+        margin-left: 71px;
+    }
+
+    .navItem {
+        margin-top: -5vh;
+       
+    }
+
+}
+
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+
+    .bar {
+        /* Adjust the styles as per your requirements */
+        padding: 20px;
+        height: auto;
+    }
+
+    .title {
+        font-size: 22px;
+        margin-left: 15px;
+    }
+
+    .Icon {
+        margin-right: 3px;
+        margin-left: -10px;
+    }
+
+    .Icon1 {
+        margin-left: 54px;
+    }
+
+    .Icon2 {
+        margin-left: 80px;
+    }
+
+    .Icon3 {
+        margin-left: 80px;
+    }
+
+    .Icon4 {
+        margin-left: 45px;
+    }
+
+    .Icon5 {
+        margin-left: 15px;
+    }
+
+    .Icon6 {
+        margin-left: 45px;
+    }
+
+    .Icon7 {
+        margin-left: 35px;
+    }
+
+    .Icon8 {
+        margin-left: 68px;
+    }
+
+    .home {
+        margin-bottom: 1.875em;
+    }
+
+    .table1 {
+        margin-left: 15vw;
+        margin-top: 4vh;
+
+    }
+
+    .table2 {
+        margin-left: 50px;
+        margin-bottom: 20px;
+
+
+    }
+
+    .table3 {
+        margin-left: 250px;
+        margin-bottom: 20vh;
+    }
+
+    .customCard {
+        margin-bottom: 5vh;
+        width: 220px;
+        margin-left: 7vh;
+
+
+    }
+
+    .navItem {
+        margin-top: -4vh;
+    }
+
+
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+
+
+    .navItem {
+        margin-top: -4vh;
+        width: 24.8vw;
+    }
+
+    .Icon {
+        margin-right: 20px;
+        margin-left: 8px;
+    }
+    
+    .Icon1 {
+        margin-left: 82px;
+    }
+    
+    .Icon2 {
+        margin-left: 110px;
+    }
+    
+    .Icon3 {
+        margin-left: 110px;
+    }
+    
+    .Icon4 {
+        margin-left: 75px;
+    }
+    
+    .Icon5 {
+        margin-left: 42px;
+    }
+    
+    .Icon6 {
+        margin-left: 75px;
+    }
+    
+    .Icon7 {
+        margin-left: 65px;
+    }
+    
+    .Icon8 {
+        margin-left: 100px;
+    }
+    
+    .table3 {
+        margin-left: 200px;
+        
+
+
+    }
+
+}
+
+@media screen and (min-width:1400px)
+{
+    .navItem {
+        margin-top: -6vh;
+        width: 16.2vw;
+    }
+
+}
+
+@media screen and (min-width:480px) and (max-width: 576px) {
+
+    body {
+        margin-top: 20px;
+        overflow-x: auto;
+
+    }
+
+    .home {
+        margin-bottom: 1.25em;
+    }
+
+    .title {
+
+        font-weight: bold;
+        font-size: 25px;
+        margin-Top: 60px;
+        margin-left: 15px;
+    }
+
+    .navItem {
+        margin-top: -4vh;
+        width: 50vw;
+    }
+
+    .table3 {
+        margin-bottom: 10vh;
+
+    }
+
+    .table1 {
+        margin-left: 15vw;
+        margin-top: 4vh;
+
+    }
+
+}
+
+@media screen and (min-width:640px) and (min-height:1146px)
+{
+    .home {
+        margin-bottom: 3.8em;
+    }
+
+    .title {
+        margin-bottom:2em;
+    }
+}

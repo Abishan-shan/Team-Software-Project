@@ -1,0 +1,18 @@
+.scroll{
+    margin-top: 10vh;
+    max-height:100vh;
+    overflow-y: auto;
+    
+}
+
+.colScroll{
+   box-shadow: 0px -2px 5px 0px;
+  padding: 5vh;
+  margin-top: 10vh;
+}
+
+.short{
+    height:9vh;
+}
+
+

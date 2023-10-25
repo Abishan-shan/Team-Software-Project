@@ -1,0 +1,158 @@
+
+.main-heading{
+    color: rgb(9, 64, 104);
+    font-size:26px;
+  }
+  .hj{
+    align-items: center;
+    padding-left: 10;
+  }
+  .underling{
+    height:04px;
+    width:4rem;
+    background-color:rgba(26, 131, 230, 0.852);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .bg-c-light{
+    background-color: rgba(245, 241, 241, 0.986);
+  .p2{
+    color: rgb(68, 66, 66);
+  }
+  }
+  .footer a{
+    color:white ;
+    text-decoration: none !important ;
+  }
+  .footer a:hover{
+    color: gray;
+  }
+
+  .img-card {
+    width:100%;
+  }
+  .break-paragraph {
+    word-break: break-all;
+  }
+  .underling{
+    height:04px;
+    width:6rem;
+    background-color:rgba(54, 55, 55, 0.112);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color:rgb(78, 161, 234);
+    color: hsl(241, 92%, 47%); 
+    border-color: black;
+  }
+
+  .section{
+    padding-top: 30px;
+    padding-bottom:40px;
+  }
+  
+  .button2{
+    padding-top:100px;
+    padding-bottom:50px;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .firstPage {
+    padding:2rem 9%;
+    display:flex;
+    align-items:center;
+    min-height:100vh;
+    
+    background-size: cover;
+    background-position:center;
+
+  }
+  .firstPage .content {
+    max-width: 50rem;
+
+  }
+  .firstPage .content h3{
+    font-size:6rem;
+    color:black;
+
+  }
+  .cl{
+    color:rgb(50, 50, 141);
+
+  }
+  .p cl2{
+    color: rgb(13, 146, 146);
+  }
+  .col {
+    width: 100%;
+  }
+  
+  /* Media queries for responsiveness */
+  @media (min-width: 768px) {
+    .col {
+      width: 50%;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .col {
+      width: 33.33%;
+    }
+  }
+  .card-height {
+    height: 350px;
+    
+  }
+  .column-card{
+     padding-left: 115px;
+     padding-right: 110px;
+     
+     
+  }
+  .img3{
+    height: 200px;
+  }
+  .prow {
+    height: 100%;
+    margin: 0;
+}
+.navrow{
+  width: 100%;
+  height: 10px;
+}
+.btn-custom {
+  background-color: rgb(58, 160, 234);
+  
+}
+
+.hw{
+  color:rgb(58, 160, 234);
+  font-family: Arial, Helvetica, sans-serif;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+.par{
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #868383;
+  background-color: hsl(0, 50%, 99%);
+  padding: 40px;
+  padding-left: 50px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+  .cont{
+    margin-left: 10px;
+    padding-top: 50px;
+    margin-top: 10px;
+  }
+    
