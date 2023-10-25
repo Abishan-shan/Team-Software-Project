@@ -17,7 +17,7 @@ import AddPrescription from "./AdminDashboard/Prescription/AddPrescription";
 import PrescriptionList from "./AdminDashboard/Prescription/PrescriptionList";
 import Login from "./Home/Login"
 import Home from "./Home/FirstPage"
-
+import DoctorDashboard from "./doctor/index";
 
 
 
@@ -43,7 +43,7 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/" element={<Home />}/>
         
-        
+        <Route path="/doctor/dash" element={<DoctorDashboard />}></Route>
       </Routes>
   )
 }
