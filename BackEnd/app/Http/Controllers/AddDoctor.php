@@ -51,15 +51,13 @@ class AddDoctor extends Controller
 
         else
         {
-
-            $password=  Hash::make($req->Password);
             
             $Doctor=new Doctor;
             
             $Doctor->FName = $req->FName;
             $Doctor->LName =  $req->LName;
             $Doctor->Email =  $req->Email;
-            $Doctor->Password =  $password;
+            $Doctor->Password =  $req->Password;
             $Doctor->Designation =  $req->Designation;
             $Doctor->Department =  $req->Department;
             $Doctor->Address =  $req->Address;

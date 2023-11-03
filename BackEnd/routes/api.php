@@ -49,16 +49,20 @@ Route::get("/TotalPayment",[AddPayment::class,'TotalPayment']);
 //addAppointment
 Route::post("/appointment",[AddAppointment::class,'index']);
 Route::get("/Aview",[AddAppointment::class,'Aview']);
+Route::get("/APview/{id}",[AddAppointment::class,'APview']);
+Route::get("/APDview/{id}",[AddAppointment::class,'APDview']);
 Route::delete("/Appdelete/{id}",[AddAppointment::class,'destroy']);
 Route::put("/Appupdate/{id}",[AddAppointment::class,'update']);
 Route::get("/Appedit/{id}",[AddAppointment::class,'show']);
 Route::get("/AppCount",[AddAppointment::class,'count']);
 Route::get("/AppAdd",[AddAppointment::class,'UpAppointment']);
+Route::get("/getPatientAppointmentsCount/{patientID}", [AddAppointment::class, 'getPatientAppointmentsCount']);
 
 
 //addPrescriptions
 Route::post("/addPrescription",[AddPrescription::class,'index']);
 Route::get("/Pview",[AddPrescription::class,'Pview']);
+Route::get("/PPview/{id}",[AddPrescription::class,'PPview']);
 Route::delete("/Predelete/{id}",[AddPrescription::class,'destroy']);
 Route::put("/Preupdate/{id}",[AddPrescription::class,'update']);
 Route::get("/Preedit/{id}",[AddPrescription::class,'show']);
@@ -68,12 +72,15 @@ Route::post("/patient",[AddPatient::class,'index']);
 Route::get("/Patview",[AddPatient::class,'Pview']);
 Route::delete("/Pdelete/{id}",[AddPatient::class,'destroy']);
 Route::put("/Patupdate/{id}",[AddPatient::class,'update']);
+Route::post("/updatePro/{id}",[AddPatient::class,'updatePro']);
 Route::get("/Patedit/{id}",[AddPatient::class,'show']);
 Route::post("/Patlogin",[AddPatient::class,'login']);
 Route::post("/Patlogout",[AddPatient::class,'logout']);
 Route::get("/PatCount",[AddPatient::class,'count']);
 Route::get("/PatNewcount",[AddPatient::class,'Newcount']);
 Route::get("/PatNew",[AddPatient::class,'NewPatients']);
+Route::get("/getPatientData/{id}", [AddPatient::class,'getPatientData']);
+
 
 //addDoctor
 Route::post("/Doctor",[AddDoctor::class,'index']);
@@ -92,6 +99,7 @@ Route::get("/DocCount",[AddDoctor::class,'count']);
 
 Route::post("/loginAll",[LoginAll::class,'login']);
 Route::get("/index",[EnterPage::class,'index']);
+
 
 // Route::group(['middleware' => ['auth:patient']], function () {
 //     // Your protected routes here

@@ -15,10 +15,14 @@ import AppointmentList from "./AdminDashboard/Appointment/AppontmentList";
 import PaymentList from "./AdminDashboard/Payment/PayementList";
 import AddPrescription from "./AdminDashboard/Prescription/AddPrescription";
 import PrescriptionList from "./AdminDashboard/Prescription/PrescriptionList";
-import Login from "./Home/Login"
-import Home from "./Home/FirstPage"
-
-
+import Login from "./Home/Login";
+import Home from "./Home/FirstPage";
+import AppointmentPatient from "./PatientDashboard/AddAppointment";
+import PatientDashBoard from "./PatientDashboard/Dashboard";
+import DisplayDoctorList from "./PatientDashboard/DoctorList";
+import AppointmentPatientList from "./PatientDashboard/AppontmentList";
+import DisplayPresList from "./PatientDashboard/PrescriptionList";
+import DisplayDoctorShedule from "./PatientDashboard/SheduleList";
 
 
 function App() {
@@ -41,8 +45,15 @@ function App() {
         <Route path="/prescription/AddPrescription" element={<AddPrescription />}/>
         <Route path="/prescription/PrescriptionList" element={<PrescriptionList />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/" element={<Home />}/>
-        
+        <Route path="/" element={<Home />}/> 
+		
+		
+        <Route path="/patientDashbord" element={<PatientDashBoard />} />
+        <Route path="/appointPatient" element={<AppointmentPatient />}/>
+		<Route path="/appoinmentslist" element={<AppointmentPatientList />}/>
+		<Route path="/doctorslist" element={<DisplayDoctorList />}/>
+        <Route path="/priscriptionslist" element={<DisplayPresList />}/>
+		<Route path="/Doctorscheduleslist" element={<DisplayDoctorShedule />}/>
         
       </Routes>
   )

@@ -8,6 +8,7 @@ use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class AddPatient extends Controller
 {
     /**
@@ -239,6 +240,38 @@ class AddPatient extends Controller
     /**
      * Remove the specified resource from storage.
      */
+	 
+	 public function updatepro(Request $req, string $id)
+	{
+		// Find the patient by ID
+		$patient = Patient::find($id);
+
+		if (!$patient) {
+			return response()->json(['message' => 'Patient not found'], 404);
+		}
+
+		// Update specific fields
+		$patient->FName = $req->FName;
+		$patient->LName = $req->LName;
+		$patient->Email = $req->Email;
+		$patient->Address = $req->Address;
+
+		if ($req->hasFile('Image')) {
+			// If the "Image" field has a file, store the file and get the file path
+			$imagePath = $req->file('Image')->store("apiDocs");
+			$patient->Image = $imagePath;
+		}
+
+		// Save the changes to the database
+		$result = $patient->save();
+
+		if ($result) {
+			return "Updated successfully";
+		} else {
+			return "Error updating patient";
+		}
+	}
+
     public function destroy(string $id)
     {
             $find=Patient::find($id);
@@ -295,4 +328,17 @@ class AddPatient extends Controller
         return $count;
 
     }
+	public function getPatientData(string $patientID)
+	{
+		$patient = Patient::find($patientID);
+
+		if (!$patient) {
+			return response()->json(['message' => 'Patient not found'], 404);
+		}
+
+		return response()->json($patient);
+	}
+	
+		
+
 }
