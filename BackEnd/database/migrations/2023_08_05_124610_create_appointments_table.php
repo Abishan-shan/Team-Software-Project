@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("LastName");
             $table->string("Email")->unique();
             $table->string("PatientId");
-            $table->string("DepartmentName");
+            $table->string("Time");
             $table->string("AppointmentWith");
             $table->string("Date");
             $table->string("Problem");

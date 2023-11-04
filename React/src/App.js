@@ -17,6 +17,10 @@ import AddPrescription from "./AdminDashboard/Prescription/AddPrescription";
 import PrescriptionList from "./AdminDashboard/Prescription/PrescriptionList";
 import Login from "./Home/Login"
 import Home from "./Home/FirstPage"
+import DoctorDash from "./DoctorDashboard/DoctorDash"
+import Profile from "./DoctorDashboard/Profile"
+import Appointment from "./DoctorDashboard/Appointment";
+import Schedule from "./DoctorDashboard/Schedule";
 
 
 
@@ -42,6 +46,11 @@ function App() {
         <Route path="/prescription/PrescriptionList" element={<PrescriptionList />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/" element={<Home />}/>
+
+        <Route path="/Doctor/Dash" element={<DoctorDash />} />
+        <Route path="/Doctor/Profile" element={<Profile />} />
+        <Route path="/Doctor/Appointment"   element={<Appointment />}/>
+        <Route path="/Doctor/Schedule"   element={<Schedule />}/>
         
         
       </Routes>

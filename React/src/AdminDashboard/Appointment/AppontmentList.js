@@ -561,7 +561,7 @@ const AppointmentList = () => {
                       <th>Email</th>
                       <th>Patient Id</th>
                       <th>Doctor Name</th>
-                      <th>Department</th>
+                      <th>Time</th>
                       <th>Date</th>
                       <th>Disease</th>
                       <th colSpan={2}>Actions</th>
@@ -573,7 +573,7 @@ const AppointmentList = () => {
                           <td>{item.Email}</td>
                           <td>{item.PatientId}</td>
                           <td>{item.AppointmentWith}</td>
-                          <td>{item.DepartmentName}</td>
+                          <td>{item.Time}</td>
                           <td>{item.Date}</td>
                           <td>{item.Problem}</td>
                           <td>
@@ -680,8 +680,8 @@ const AppointmentList = () => {
                             <Form.Label>Department Name</Form.Label>
                             <Form.Control
                               type="text"
-                              name="DepartmentName"
-                              value={Udata.DepartmentName}
+                              name="Time"
+                              value={Udata.Time}
                               onChange={HandleChange}
                             />
                           </Form.Group>

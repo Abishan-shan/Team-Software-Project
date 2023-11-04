@@ -573,7 +573,7 @@ const SheduleList = () => {
                 <Card.Body className="ScrollViewPatienList">
                   <Table responsive="sm" hover>
                     <thead>
-                      <th>Seria No</th>
+                      <th>Doctor Id</th>
                       <th>Doctor Name</th>
                       <th>Department Name</th>
                       <th>Day</th>
@@ -590,7 +590,7 @@ const SheduleList = () => {
 
                         return (
                           <tr key={item.id}>
-                            <td>{item.id}</td>
+                            <td>{item.DoctorId}</td>
                             <td>{item.DoctorName}</td>
                             <td>{item.AddDepartment}</td>
                             <td>{item.day}</td>
@@ -730,6 +730,7 @@ const SheduleList = () => {
                               inline
                               required
                               onChange={HandleChange}
+                              disabled
                             />
                             <Form.Check // prettier-ignore
                               inline
@@ -740,6 +741,7 @@ const SheduleList = () => {
                               value=" InActive"
                               required
                               onChange={HandleChange}
+                              disabled
                             />
                           </Form.Group>
                         </Col>

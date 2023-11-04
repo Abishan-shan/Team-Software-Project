@@ -152,7 +152,7 @@ class AddPatient extends Controller
     public function logout(){
 
         Auth::logout();
-        return "You are logged in successfully";
+        return "You are logged out in successfully";
 
     }
 

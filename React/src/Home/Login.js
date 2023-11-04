@@ -80,6 +80,7 @@ export default function Login() {
       }
 
       const res=await response.json();
+	  console.log(res);
 
       if(res.Username === "admin")
       {
@@ -117,9 +118,18 @@ export default function Login() {
 
 	  if(res.Bio )
       {
-		////navigate('/adminDashboard');
-		localStorage.setItem('myData',res.FName +" "+res.LName);
+
+		const Dt=res.FName+ " "+ res.LName;
+		const data = {
+			value: Dt,
+			expiresAt: new Date().getTime() + 3600 * 1000, // Set expiration to 1 hour from now
+		  };
+		  console.log(data);
+		localStorage.setItem('myData',JSON.stringify(data));
+		localStorage.setItem('myProfile',JSON.stringify(res));
 		console.log("entered Successfully DOCTOR");
+		navigate('/Doctor/Dash');
+
 
         setList({
 

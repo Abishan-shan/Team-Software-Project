@@ -19,6 +19,7 @@ body {
     font-weight: bold;
     font-size: 25px;
     margin-left: 18px;
+    color:#f9f9f9
 
 }
 
@@ -83,7 +84,7 @@ body {
 
 .home:hover {
     cursor: pointer;
-    color: rgb(165, 60, 18);
+    color: rgb(15, 39, 35);
 }
 
 /* scroll view for appointment */

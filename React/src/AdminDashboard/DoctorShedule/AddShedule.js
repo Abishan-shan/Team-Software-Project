@@ -27,6 +27,7 @@ const AddShedule = () => {
   const navigate = useNavigate();
   const [showAlert,setShowAlert]=useState(false);
   const [schedule,setSchedule]=useState({
+          "DoctorId":"",
         "DoctorName":"",
         "time":"",
         "AddDepartment":"",
@@ -42,6 +43,40 @@ const AddShedule = () => {
   const [open7, setOpen7] = useState(false);
   const [open8, setOpen8] = useState(false);
   const [receivedData, setReceivedData] = useState(false);
+  const [id,setId]=useState([]);
+
+
+
+
+  useEffect(()=>{
+    getId();
+    
+  },[])
+
+
+  const getId =async ()=>{
+
+        const response=await fetch("http://127.0.0.1:8001/api/DoctorId",{
+          method:"GET",
+          headers:{
+            "Content-Type":"application/json"
+          }
+      
+        });
+      const res=await response.json();
+      console.log(res); // This will output 1
+
+      
+      if(!response.ok)
+      {
+        console.log("Error");
+      }
+      
+      else{
+          setId(res);
+      }
+
+  }
 
   useEffect(()=>{
 
@@ -173,12 +208,13 @@ const AddShedule = () => {
       const res=await response.text();
       console.log(res);
 
-      if(res === "saved successfully")
+      if(res === "updated successfully")
       {
 
         setShowAlert(true);
 
         setSchedule({
+          "DoctorId":"",
           "DoctorName":"",
             "time":"",
             "AddDepartment":"",
@@ -190,6 +226,7 @@ const AddShedule = () => {
 
   const onReset = ()=>{
     setSchedule({
+      "DoctorId":"",
       "DoctorName":"",
         "time":"",
         "AddDepartment":"",
@@ -501,6 +538,45 @@ const AddShedule = () => {
                     </Col>
                     <Col xl={6}>
                       <Form.Group>
+                        <Form.Label>Doctor Id</Form.Label>
+
+
+                        <Form.Select 
+                            aria-label="Default select example"
+                            name="DoctorId"
+                            value={schedule.DoctorId}
+                            onChange={HandleChange}
+                          >
+                          <option value="">Select an option</option>
+                          {id.map((value, index) => (
+                            <option key={index} value={value}>{value}</option>
+                          ))}
+                        </Form.Select>
+                        
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col xl={12} md={12}>
+                  <Row>
+                    <Col xl={6}>
+                      <Form.Group>
+                        <Form.Label placeholder="Enter Department name">
+                          Add Department
+                        </Form.Label>
+                        <Form.Control 
+                        type="text" 
+                        name="AddDepartment" 
+                          value={schedule.AddDepartment}
+                          onChange={HandleChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+
+                    <Col xl={6}>
+                      <Form.Group>
                         <Form.Label placeholder="Available time">
                           Available Time
                         </Form.Label>
@@ -520,15 +596,28 @@ const AddShedule = () => {
                   <Row>
                     <Col xl={6}>
                       <Form.Group>
-                        <Form.Label placeholder="Enter Department name">
-                          Add Department
-                        </Form.Label>
-                        <Form.Control 
-                        type="text" 
-                        name="AddDepartment" 
-                          value={schedule.AddDepartment}
-                          onChange={HandleChange}
+                        <Form.Label className="me-2">Status</Form.Label> <br />
+                        <Form.Check // prettier-ignore
+                          type="radio"
+                          label="Active"
+                          id="radio-1"
+                          name="status"
+                          value="Active"
+                          inline
                           required
+                          onChange={HandleChange}
+                          disabled
+                        />
+                        <Form.Check // prettier-ignore
+                          inline
+                          type="radio"
+                          label="InActive"
+                          name="status"
+                          id="radio-2"
+                          value=" InActive"
+                          required
+                          onChange={HandleChange}
+                          disabled
                         />
                       </Form.Group>
                     </Col>
@@ -554,36 +643,6 @@ const AddShedule = () => {
                           <option value="Friday" >Friday</option>
                           <option value="Saturday">Saturday</option>
                         </Form.Select>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col xl={12} md={12}>
-                  <Row>
-                    <Col xl={6}>
-                      <Form.Group>
-                        <Form.Label className="me-2">Status</Form.Label> <br />
-                        <Form.Check // prettier-ignore
-                          type="radio"
-                          label="Active"
-                          id="radio-1"
-                          name="status"
-                          value="Active"
-                          inline
-                          required
-                          onChange={HandleChange}
-                        />
-                        <Form.Check // prettier-ignore
-                          inline
-                          type="radio"
-                          label="InActive"
-                          name="status"
-                          id="radio-2"
-                          value=" InActive"
-                          required
-                          onChange={HandleChange}
-                        />
                       </Form.Group>
                     </Col>
                   </Row>

@@ -11,6 +11,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import logout from './Logout.png';
 
 
 
@@ -126,6 +127,30 @@ const DashBoard = () => {
     navigate("/prescription/PrescriptionList");
   }
 
+
+  const Logout = async () => {
+    console.log("hello");
+
+    const response = await fetch("http://127.0.0.1:8001/api/Patlogout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const res = await response.text();
+    console.log(response.status);
+
+    if (!response.ok) {
+      console.log("Error", response.status);
+    }
+
+    if (response.status == 200) {
+      console.log("hi");
+      localStorage.removeItem("myData");
+      navigate("/login");
+    }
+  };
 
   const getDoctorNum = async()=>{
 
@@ -340,7 +365,23 @@ else{
       <Row className="mt-1 row">
         <Col sm={5} xxs={2} xs={6} lg={3} md={4} xl={3} xxl={2} className="bar">
           <div>
-            <p className="title"> Health care</p>
+            <p className="title"> Health care 
+              
+            <Button  variant="light" title="Logout" style={{ color: "white" ,width:30 ,height:30,marginLeft:30}} onClick={Logout} className="mt-2">
+                      
+                    
+                  <img
+                    src={logout}
+                    alt="Logo"
+                    className="profile2"
+                    width="40"
+                    style={{width:40 ,height:40,marginLeft:-18 , marginTop:-15}}
+
+                    />
+              </Button>
+                 
+            </p>
+            
           </div>
 
           <Nav className="flex-column" defaultActiveKey={"#home"}>

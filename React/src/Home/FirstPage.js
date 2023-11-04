@@ -9,6 +9,7 @@ import Navbar from './Component/Navbar';
 import p4 from './images/p4.jpg';
 
 
+
 export default function FirstPage() {
   return (
     <div>
@@ -23,6 +24,12 @@ At [Hospital Name], our mission is to deliver exceptional healthcare with empath
 <div class="d-grid button2 gap-20 col-md-6 mx-auto">
                            <Link to="/login"> <button class="btn btn-outline-primary btn-lg" type="button">MAKE AN APPOINTMENT</button></Link>
                           </div>
+
+                          <div>
+      
+    </div>
+
+      
 						  
         </div>
       </section>

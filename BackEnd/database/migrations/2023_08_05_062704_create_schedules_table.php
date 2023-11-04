@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Auto-incremental primary key
+            $table->integer('DoctorId');
             $table->string("DoctorName");
             $table->string("time");
             $table->string("AddDepartment");

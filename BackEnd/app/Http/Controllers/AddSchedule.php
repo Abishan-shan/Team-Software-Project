@@ -14,11 +14,11 @@ class AddSchedule extends Controller
     public function index(Request $req)
     {
         $rules=array(
+            "DoctorId" => "required",
             "DoctorName" => "required",
             "time" =>"required",
             "AddDepartment" => "required",
             "day" =>"required",
-            "status"=>"required"
         );
 
         $validator= Validator::make($req->all(),$rules);
@@ -32,11 +32,12 @@ class AddSchedule extends Controller
         {
             $Schedule=new Schedule;
 
+            $Schedule->DoctorId = $req->DoctorId;
             $Schedule->DoctorName = $req->DoctorName;
             $Schedule->time = $req->time;
             $Schedule->AddDepartment = $req->AddDepartment;
             $Schedule->day=$req->day;
-            $Schedule->status = $req->status;
+            $Schedule->status = "";
 
             $result=$Schedule->save();
 
@@ -120,9 +121,37 @@ class AddSchedule extends Controller
 
     }
 
+    function ScheduleUpdate(String $id,Request $req)
+    {
+        $find=Schedule::where("id",$id)->first();
+
+        $find->status = $req->status;
+
+            $result=$find->save();
+
+            if($result)
+            {
+                return "updated successfully";
+            }
+
+            
+            return "hello: ".$find;
+
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */
+
+
+    public function showSchedule(string $id)
+    {
+        $user=Schedule::where('DoctorId',$id)->get();
+        return $user;
+    }
+
+
     public function destroy(string $id)
     {
         //

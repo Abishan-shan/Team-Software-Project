@@ -65,7 +65,7 @@ import {
       "LastName":"",
       "Email":"",
       "PatientId":"",
-      "DepartmentName":"",
+      "Time":"",
       "AppointmentWith":"",
       "Date":"",
       "Problem":"",
@@ -142,7 +142,7 @@ const AddDepartment = ()=>{
       "LastName":"",
       "Email":"",
       "PatientId":"",
-      "DepartmentName":"",
+      "Time":"",
       "AppointmentWith":"",
       "Date":"",
       "Problem":"",
@@ -190,7 +190,7 @@ const AddDepartment = ()=>{
           "LastName":"",
           "Email":"",
           "PatientId":"",
-          "DepartmentName":"",
+          "Time":"",
           "AppointmentWith":"",
           "Date":"",
           "Problem":"",
@@ -565,11 +565,11 @@ const AddDepartment = ()=>{
                       
                       <Col xl={6}>
                         <Form.Group>
-                          <Form.Label>Department Name</Form.Label>
+                          <Form.Label>Time</Form.Label>
                           <Form.Control 
                             type="text" 
-                            name="DepartmentName"
-                            value={List.DepartmentName}
+                            name="Time"
+                            value={List.Time}
                             onChange={HandleChange}
                             />
                         </Form.Group>

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Patient;
 use Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class AddAppointment extends Controller
 {
@@ -21,7 +24,7 @@ class AddAppointment extends Controller
             "LastName" => "required",
             "Email" => "required|email",
             "PatientId"=> "required",
-            "DepartmentName"=>"required",
+            "Time"=>"required",
             "AppointmentWith"=>"required",
             "Date"=>"required",
             "Problem"=>"required",
@@ -44,7 +47,7 @@ class AddAppointment extends Controller
             $Appointment->LastName =  $req->LastName;
             $Appointment->Email =  $req->Email;
             $Appointment->PatientId =  $req->PatientId;
-            $Appointment->DepartmentName =  $req->DepartmentName;
+            $Appointment->Time =  $req->Time;
             $Appointment->AppointmentWith =  $req->AppointmentWith;
             $Appointment->Date =  $req->Date;
             $Appointment->Problem =  $req->Problem;
@@ -123,7 +126,7 @@ class AddAppointment extends Controller
         $find->LastName =  $req->LastName;
         $find->Email =  $req->Email;
         $find->PatientId =  $req->PatientId;
-        $find->DepartmentName =  $req->DepartmentName;
+        $find->Time =  $req->Time;
         $find->AppointmentWith =  $req->AppointmentWith;
         $find->Date =  $req->Date;
         $find->Problem =  $req->Problem;
@@ -177,6 +180,84 @@ class AddAppointment extends Controller
 
         return $count;
     }
+
+
+    
+public function Patcount(string $DocName)
+{
+    $find = Appointment::where("AppointmentWith", $DocName)->get();
+    $patientIds = $find->count('PatientId');
+
+    return $patientIds;
+}
+
+public function TotalApp(string $DocName)
+{
+    $find = Appointment::where("AppointmentWith", $DocName)->get();
+    $Appointment = $find->count('id');
+
+    return $Appointment;
+}
+
+
+public function PatcountToday(string $DocName)
+{
+   
+    $today=now()->format('Y-m-d');
+    $after=now()->addDays(1)->format('Y-m-d');
+    $find = Appointment::where("AppointmentWith", $DocName)->get();
+    $c = $find->where("Date", $today);
+    $patientIds = $c->count('PatientId');
+
+    return $patientIds;
+} 
+
+
+public function DocPatients(string $DocName)
+{
+
+    $today=now()->format('Y-m-d');
+    $after=now()->addDays(1)->format('Y-m-d');
+    
+    
+   
+    $appointments = Appointment::where("AppointmentWith", $DocName)->get();
+    $App = $appointments->where("Date", $today);
+
+    // Step 2: Extract Patient IDs and retrieve patient information
+    $patientInfo = [];
+
+    foreach ($App as $appointment) {
+        $patientId = $appointment->PatientId;
+
+        // Retrieve patient information based on the patient ID
+        $patient = Patient::find($patientId);
+
+        if ($patient) {
+            $patientInfo[] = $patient;
+        }
+    }
+
+    return $patientInfo;
+} 
+
+public function appointmentAll(string $DocName)
+{
+    $today=now()->format('Y-m-d');
+    $after=now()->addDays(1)->format('Y-m-d');
+    $find = Appointment::where("AppointmentWith", $DocName)->get();
+    $App = $find->where("Date", $today);
+
+    return  $App;
+} 
+
+public function appointmentDoc(string $DocName)
+{
+    $find = Appointment::where("AppointmentWith", $DocName)->get();
+    
+    return  $find;
+} 
+
 
     public function UpAppointment(){
 

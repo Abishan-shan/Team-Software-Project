@@ -205,6 +205,26 @@ class AddDoctor extends Controller
             }
     }
 
+
+    public function ProfUpdate(string $id,Request $req)
+    {
+            $find=Doctor::find($id);
+
+            $find->FName=$req->FName;
+            $find->LName=$req->LName;
+            $find->Email= $req->Email;
+            $find->Department= $req->Department;
+            $find->Address= $req->Address;
+            $find->Mobile= $req->Mobile;
+
+            $result=$find->save();
+            
+            if($result)
+            {
+                return "updated successfully";
+            }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -243,6 +263,14 @@ class AddDoctor extends Controller
         // $before=now()->subdays(5)->format('Y-m-d');
 
         return $count;
+    }
+
+
+    public function DoctorId(){
+
+        $Doctor=Doctor::All();
+        $find=$Doctor->pluck('id');
+        return $find;
     }
 
 

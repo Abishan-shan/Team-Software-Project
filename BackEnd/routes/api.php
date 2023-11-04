@@ -35,6 +35,8 @@ Route::get("/Sview",[AddSchedule::class,'view']);
 Route::put("/Schupdate/{id}",[AddSchedule::class,'update']);
 Route::get("/Schedit/{id}",[AddSchedule::class,'show']);
 Route::delete("/Schdelete/{id}",[AddSchedule::class,'destroy']);
+Route::get("/showSchedule/{id}",[AddSchedule::class,'showSchedule']);
+Route::put("/ScheduleUpdate/{id}",[AddSchedule::class,'ScheduleUpdate']);
 
 
 
@@ -54,6 +56,12 @@ Route::put("/Appupdate/{id}",[AddAppointment::class,'update']);
 Route::get("/Appedit/{id}",[AddAppointment::class,'show']);
 Route::get("/AppCount",[AddAppointment::class,'count']);
 Route::get("/AppAdd",[AddAppointment::class,'UpAppointment']);
+Route::get("/PatientCount/{DocName}",[AddAppointment::class,'Patcount']);
+Route::get("/PatcountToday/{DocName}",[AddAppointment::class,'PatcountToday']);
+Route::get("/TotalApp/{DocName}",[AddAppointment::class,'TotalApp']);
+Route::get("/DocPatients/{DocName}",[AddAppointment::class,'DocPatients']);
+Route::get("/appointmentAll/{DocName}",[AddAppointment::class,'appointmentAll']);
+Route::get("/appointmentDoc/{DocName}",[AddAppointment::class,'appointmentDoc']);
 
 
 //addPrescriptions
@@ -75,6 +83,8 @@ Route::get("/PatCount",[AddPatient::class,'count']);
 Route::get("/PatNewcount",[AddPatient::class,'Newcount']);
 Route::get("/PatNew",[AddPatient::class,'NewPatients']);
 
+
+
 //addDoctor
 Route::post("/Doctor",[AddDoctor::class,'index']);
 Route::get("/Dview",[AddDoctor::class,'Dview']);
@@ -85,6 +95,8 @@ Route::get("/Docedit/{id}",[AddDoctor::class,'show']);
 Route::post("/Doclogin",[AddDoctor::class,'login']);
 Route::post("/Doclogout",[AddDoctor::class,'logout']);
 Route::get("/DocCount",[AddDoctor::class,'count']);
+Route::get("/DoctorId",[AddDoctor::class,'DoctorId']);
+Route::put("/ProfUpdate/{id}",[AddDoctor::class,'ProfUpdate']);
 
 
 
