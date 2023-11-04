@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 
+
 const AddDoctor = () => {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
@@ -217,6 +218,31 @@ const onSubmit =async (e)=>{
     }
 }
 
+const Logout = async () => {
+  console.log("hello");
+
+  const response = await fetch("http://127.0.0.1:8001/api/Patlogout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const res = await response.text();
+  console.log(response.status);
+
+  if (!response.ok) {
+    console.log("Error", response.status);
+  }
+
+  if (response.status == 200) {
+    console.log("hi");
+    localStorage.removeItem("myData");
+    navigate("/login");
+  }
+};
+
+
 const HandleChange = (e)=>{
      const {name,value, type, files}=e.target;
      console.log(name);
@@ -273,7 +299,7 @@ else{
             <p className="title"> Health care</p>
           </div>
 
-          <Nav className="flex-column" defaultActiveKey={"#home"}>
+           <Nav className="flex-column" defaultActiveKey={"#home"}>
             <Nav.Item>
             <Nav.Item>
               <Nav.Link

@@ -105,8 +105,11 @@ export default function Login() {
 	  if(res.History)
       {
 		localStorage.setItem('myData',res.FName +" "+res.LName );
+		localStorage.setItem('patientid',res.id );
 		//navigate('/adminDashboard');
+		localStorage.setItem('myProfile',JSON.stringify(res));
 		console.log("entered successfully PATIENT");
+		navigate('/patientDashbord');
         setList({
 
           
@@ -175,11 +178,7 @@ export default function Login() {
 					Login
 				  </MDBTabsLink>
 				</MDBTabsItem>
-				<MDBTabsItem>
-				  <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
-					Register
-				  </MDBTabsLink>
-				</MDBTabsItem>
+				
 			  </MDBTabs>
 
 			  <MDBTabsContent>

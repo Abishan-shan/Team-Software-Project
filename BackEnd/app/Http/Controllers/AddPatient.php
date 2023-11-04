@@ -338,6 +338,27 @@ class AddPatient extends Controller
 
 		return response()->json($patient);
 	}
+
+
+    public function PatientProfUpdate(string $id,Request $req)
+    {
+            $find=Patient::find($id);
+
+            $find->FName=$req->FName;
+            $find->LName=$req->LName;
+            $find->Email= $req->Email;
+            $find->DOB= $req->DOB;
+            $find->Address= $req->Address;
+            $find->Mobile= $req->Mobile;
+
+            $result=$find->save();
+            
+            if($result)
+            {
+                return "updated successfully";
+            }
+    }
+
 	
 		
 

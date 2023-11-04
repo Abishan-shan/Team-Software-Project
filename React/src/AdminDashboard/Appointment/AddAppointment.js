@@ -7,6 +7,7 @@ import {
     Button,
     Alert,
     Form,
+    Table
   } from "react-bootstrap";
   import "./appointment.css";
   import "../Dashboard.css";
@@ -39,9 +40,12 @@ import {
     const [open7, setOpen7] = useState(false);
     const [open8, setOpen8] = useState(false);
     const [receivedData, setReceivedData] = useState(false);
+    const [ViewList,isViewList]=useState(false);
+    const [data,setData]=useState([]);
 
 
     useEffect(()=>{
+      getData();
       const data = JSON.parse(localStorage.getItem('myData'));
         if(data != null)
         {
@@ -209,6 +213,45 @@ const AddDepartment = ()=>{
           ...prevState,
           [name]:value
         }));
+  }
+
+  const getData = async () => {
+    const response = await fetch("http://127.0.0.1:8001/api/viewReq", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const res = await response.json();
+    setData(res);
+    
+  };
+
+
+  const onRequest = ()=>{
+    isViewList(!ViewList);
+
+  }
+
+  const onDelete =async (id)=>{
+    console.log(id);
+
+    const response = await fetch(`http://127.0.0.1:8001/api/deleteReq/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const res = await response.text();
+
+    if (res === "deleted") {
+      console.log("deleted");
+      getData();
+    } else {
+      console.log("error");
+    }
   }
   
   
@@ -478,6 +521,63 @@ const AddDepartment = ()=>{
           </Col>
   
           <Col xl={9} sm={7} xxs={10} xs={6} lg={9} md={8} className=" scroll">
+
+          <Button
+                  variant="success"
+                  onClick={onRequest}
+                >
+                    Requests
+                </Button>
+
+
+                {ViewList && (
+
+<Collapse in={ViewList} id="bar-payment" className="navItem">
+
+<Card
+className="table1"
+style={{
+  boxShadow: "0px 0px 10px 0px",
+  width: "400px",
+  marginTop: "1vh",
+}}
+>
+<Card.Header className="cardHeader" style={{ padding: "20px" }}>
+   Appointment Requests
+</Card.Header>
+<Card.Body className="ScrollViewPatienList">
+  <Table responsive="sm" hover>
+    <thead>
+      <th>Doctor Id</th>
+      <th>Patient Id</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      {data.map((item) => {
+
+        return (
+          <tr >
+            <td>{item.DoctorId}</td>
+            <td>{item.PatientId}</td>
+            <td>
+              <Button
+                variant="danger"
+                onClick={()=>{onDelete(item.id)}}
+              >
+                delete
+              </Button>
+            </td>
+          </tr>
+         );
+      })} 
+    </tbody>
+  </Table>
+</Card.Body>
+</Card>
+</Collapse>
+
+
+                )}
             <Card className="colScroll mt-5 mb-5 ms-5">
               <Card.Header style={{fontWeight:"bold"}}>Add Appointment</Card.Header>
 

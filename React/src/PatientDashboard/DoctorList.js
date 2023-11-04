@@ -10,27 +10,37 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 const DoctorList = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [open1, setOpen1] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
-  const [open4, setOpen4] = useState(false);
-  const [open5, setOpen5] = useState(false);
-  const [open6, setOpen6] = useState(false);
-  const [open7, setOpen7] = useState(false);
-  const [open8, setOpen8] = useState(false);
+  const [patientID, setPatientId] = useState("");
+  const [Pdata, setPData] = useState({
+    Address: "",
+    BGroup: "",
+    DOB: "",
+    Email: "",
+    FName: "",
+    History:"",
+    Image: "",
+    LName: "",
+    MStatus: "",
+    Mobile: "",
+    Occupation: "",
+    id:"",
+    Sex:"",
+  });
 
   const baseUrl = "http://127.0.0.1:8001";
 
   useEffect(() => {
     getData();
     console.log(data);
-  }, []);
+  }, [patientID]);
 
    const AddHome = () =>{
 
@@ -41,8 +51,30 @@ const DoctorList = () => {
     navigate('/doctorslist');
   }
 
-  
 
+  useEffect(() => {
+    const patientID = localStorage.getItem('patientid');
+ 
+     if(patientID != null)
+     {
+       setPatientId(patientID);
+     }
+     else{
+       navigate("/login");
+     }
+ 
+ 
+     const profileData = JSON.parse(localStorage.getItem("myProfile"));
+     setPData(profileData);
+ 
+ 
+   }, []);
+  
+  const Logout = () => {
+    localStorage.removeItem('patientid');
+    localStorage.removeItem('myProfile');
+    navigate('/');
+  }
   
 
   const AddAppointment = () =>{
@@ -87,186 +119,98 @@ const DoctorList = () => {
             <p className="title"> Health care</p>
           </div>
 
+          <div className="profDet">
+            <img
+              src={"http://127.0.0.1:8001/storage/" + Pdata.Image}
+              alt="Admin"
+              className="rounded-circle p-1 bg-primary profile"
+              width="150"
+            />
+
+        {Pdata && (
+              <p className="Dr">
+                {Pdata.FName} {Pdata.LName}
+              </p>
+            )}
+            <p className="line"></p>
+          </div>
+
+
+
           <Nav className="flex-column" defaultActiveKey={"#home"}>
             <Nav.Item>
-              <Nav.Item>
-                <Nav.Link
-                  href="#home"
-                  className="home text-light"
-                  aria-controls="bar-home"
-                  onClick={() => {
-                    setOpen1(false);
-                    setOpen2(false);
-                    setOpen3(false);
-                    setOpen4(false);
-                    setOpen5(false);
-                    setOpen6(false);
-                    setOpen7(false);
-                    setOpen8(!open8);
-                  }}
-                >
-                  <WidgetsIcon className="Icon" />
-                  Dashboard
-                  <ArrowDropDownIcon className="Icon1" />
-                </Nav.Link>{" "}
-                <Collapse in={open8} id="bar-doctor" className="navItem">
-                  <Card>
-                    <Card.Body>
-                      <Button
-                        variant="light"
-                        onClick={AddHome}
-                        style={{ marginLeft: "3vw" }}
-                      >
-                        MedBoard
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </Collapse>
-              </Nav.Item>
+              <Nav.Link
+                href="#home"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-home"
+                onClick={AddHome}
+              >
+                <WidgetsIcon className="Icon" />
+                Dashboard
+               
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#doctor"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-doctor"
-                onClick={() => {
-                  setOpen1(!open1);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+                
+                  onClick={DoctorList}
+                
               >
-                {" "}
                 <LocalHospitalIcon className="Icon" />
                 Doctor
-                <ArrowDropDownIcon className="Icon2" />
               </Nav.Link>
-
-              <Collapse in={open1} id="bar-doctor" className="navItem">
-                <Card>
-                  <Card.Body>
-                    
-                    <Button variant="light">Doctor List</Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
-           
             <Nav.Item>
               <Nav.Link
                 href="#doctorSchedule"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-schedule"
-                onClick={() => {
-                  setOpen4(!open4);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen1(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+               
+                  onClick={SheduleList}
+               
               >
                 <EventAvailableIcon className="Icon" />
                 Doctor Schedule
-                <ArrowDropDownIcon className="Icon5" />
               </Nav.Link>
-
-              <Collapse in={open4} id="bar-shedule" className="navItem">
-                <Card>
-                  <Card.Body>
-
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "11px" }}
-                      onClick={SheduleList}
-                    >
-                      Schedule List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
+        
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#prescription"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-prescription"
-                onClick={() => {
-                  setOpen5(!open5);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen1(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+                onClick={PrescriptionList}
               >
-                {" "}
                 <MedicationIcon className="Icon" />
                 Prescription
-                <ArrowDropDownIcon className="Icon6" />
               </Nav.Link>
-              <Collapse in={open5} id="bar-prescription" className="navItem">
-                <Card>
-                  <Card.Body>
-                   
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "11px" }}
-                      onClick={PrescriptionList}
-                    >
-                      Prescription List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
-
             <Nav.Item>
               <Nav.Link
                 href="#appointment"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-appointment"
-                onClick={() => {
-                  setOpen6(!open6);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen1(false);
-                  setOpen7(false);
-                }}
+                onClick={AppointmentList}
               >
                 <AssignmentTurnedInIcon className="Icon" />
                 Appointment
-                <ArrowDropDownIcon className="Icon7" />
               </Nav.Link>
-              <Collapse in={open6} id="bar-appointment" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "10px" }}
-                      onClick={AddAppointment}
-                    >
-                      Add Appointment
-                    </Button>
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "10px" }}
-                      onClick={AppointmentList}
-                    >
-                      Appointment List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
+      
             </Nav.Item>
-            
+            <Nav.Item>
+              <Nav.Link
+                href="#payement"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-payment"
+                onClick={Logout}
+              >
+                <LogoutIcon className="Icon" />
+                Logout
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
         </Col>
 
@@ -277,7 +221,7 @@ const DoctorList = () => {
                 <Card className="mb-4 ImageHead">
                   <Card.Body key={item.id} className="textImage">
                     <img
-                      src={"http://127.0.0.1:8001/storage/" + item.Image}
+                      src={"http://127.0.0.1:8001/storage/"+item.Image}
                       alt={`Image for ${item.FName} ${item.LName}`}
                       className="Image"
                     />

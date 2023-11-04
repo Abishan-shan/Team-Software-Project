@@ -38,6 +38,7 @@ const AppointmentList = () => {
   const [Udata, setUdata] = useState([]);
   const [id, setId] = useState("");
   const [receivedData, setReceivedData] = useState(false);
+  
 
   useEffect(() => {
     getData();
@@ -547,7 +548,8 @@ const AppointmentList = () => {
             className=" scroll"
           >
             <Col lg={6} sm={12}>
-              <Card
+
+            <Card
                 className="table1 mb-5 mt-5"
                 style={{ boxShadow: "0px 0px 10px 0px", width: "950px" }}
               >

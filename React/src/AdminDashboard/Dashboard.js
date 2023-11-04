@@ -11,7 +11,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import logout from './Logout.png';
+import logout from './LOGpat.png';
 
 
 
@@ -367,15 +367,21 @@ else{
           <div>
             <p className="title"> Health care 
               
-            <Button  variant="light" title="Logout" style={{ color: "white" ,width:30 ,height:30,marginLeft:30}} onClick={Logout} className="mt-2">
+            <Button  variant="light" title="Logout" 
+            style={{ color: "white" ,width:30 ,height:30,
+            marginLeft:40,
+           
+            }} onClick={Logout} className="mt-2">
                       
                     
                   <img
                     src={logout}
                     alt="Logo"
                     className="profile2"
-                    width="40"
-                    style={{width:40 ,height:40,marginLeft:-18 , marginTop:-15}}
+                    style={{width:40 ,height:40,marginLeft:-18 , marginTop:-15,
+                      border: "2px solid white",
+                      borderRadius: "50%"
+                    }}
 
                     />
               </Button>
@@ -650,21 +656,15 @@ else{
           className="colScrollView"
         >
           <Row className="mt-5">
-            <Col lg={4} sm={12} md={6}>
+            <Col lg={5} sm={12} md={6}>
               <Card className="customCard">
                 <Card.Title>Doctors</Card.Title>
                 <Card.Body>{DoctorCount}</Card.Body>
               </Card>
             </Col>
 
-            <Col lg={4} sm={12} md={6}>
-              <Card className="customCard">
-                <Card.Title>Nurses</Card.Title>
-                <Card.Body>3000</Card.Body>
-              </Card>
-            </Col>
 
-            <Col lg={4} sm={12} md={6}>
+            <Col lg={5} sm={12} md={6}>
               <Card className="customCard">
                 <Card.Title>Patients</Card.Title>
                 <Card.Body>{PatientCount}</Card.Body>

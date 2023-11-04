@@ -12,13 +12,6 @@ import "./Profile.css";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [DoctorCount, setDoctorCount] = useState("");
-  const [PatientCount, setPatientCount] = useState("");
-  const [PatientNewCount, setPatientNewCount] = useState("");
-  const [AppointmentCount, setAppointmentCount] = useState("");
-  const [Appointments, setAppointments] = useState([]);
-  const [NewPatients, setNewPatients] = useState([]);
-  const [Doctors, setDoctors] = useState([]);
   const [receivedData, setReceivedData] = useState(false);
   const [data, setData] = useState({
     id:"",

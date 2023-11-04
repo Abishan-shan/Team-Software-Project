@@ -1,0 +1,26 @@
+.nav-link-hover:hover {
+    color: black !important;
+    font-weight: bold;
+  }
+
+.profDet{
+    justify-content: center;
+    align-items: center;
+    margin-left: 2.18em;
+
+}
+
+.line{
+    width:12em;
+    border-top: 0.03em solid white;
+    margin-left:-0.6em;
+}
+
+.Dr{
+    font-weight: bold;
+    font-size: larger;
+    margin-left:1em;
+}
+
+
+  

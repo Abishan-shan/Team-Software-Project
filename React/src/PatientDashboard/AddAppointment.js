@@ -19,6 +19,7 @@ import {
   import PaymentIcon from "@mui/icons-material/Payment";
   import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
   import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+  import LogoutIcon from "@mui/icons-material/Logout";
   import { useState } from "react";
   import { useNavigate } from "react-router-dom";
   
@@ -76,7 +77,11 @@ import {
   const PrescriptionList = ()=>{
     navigate("/priscriptionslist");
   }
-
+  const Logout = () => {
+    localStorage.removeItem('patientid');
+    localStorage.removeItem('patientid');
+    navigate('/');
+  }
 
 
   const onReset = ()=>{
@@ -321,6 +326,17 @@ import {
                   </Card>
                 </Collapse>
               </Nav.Item>
+              <Nav.Item>
+              <Nav.Link
+                href="#payement"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-payment"
+                onClick={Logout}
+              >
+                <LogoutIcon className="Icon" />
+                Logout
+              </Nav.Link>
+            </Nav.Item>
               
             </Nav>
           </Col>

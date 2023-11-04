@@ -442,6 +442,7 @@ const DoctorList = () => {
               <Col lg={4} sm={12} md={6}>
                 <Card className="mb-4 ImageHead">
                   <Card.Body key={item.id} className="textImage">
+                  <Card.Text className="Image1 ">Doctor id : {item.id}</Card.Text>
                     <img
                       src={"http://127.0.0.1:8001/storage/" + item.Image}
                       alt={`Image for ${item.FName} ${item.LName}`}

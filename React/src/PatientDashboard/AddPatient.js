@@ -19,6 +19,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import SheduleList from "./DoctorShedule/SheduleList";
@@ -129,6 +130,10 @@ const AddPatient = () => {
   const PrescriptionList = () => {
     navigate("/prescription/PrescriptionList");
   };
+  const Logout = () => {
+    localStorage.removeItem('patientid');
+    navigate('/');
+  }
 
   const onReset = () => {
     setList({
@@ -565,6 +570,17 @@ const AddPatient = () => {
                   </Card.Body>
                 </Card>
               </Collapse>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                href="#payement"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-payment"
+                onClick={Logout}
+              >
+                <LogoutIcon className="Icon" />
+                Logout
+              </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>

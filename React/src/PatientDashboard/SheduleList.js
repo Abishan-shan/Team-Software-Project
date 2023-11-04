@@ -19,29 +19,58 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SheduleList = () => {
   const navigate = useNavigate();
-  const [open1, setOpen1] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
-  const [open4, setOpen4] = useState(false);
-  const [open5, setOpen5] = useState(false);
-  const [open6, setOpen6] = useState(false);
-  const [open7, setOpen7] = useState(false);
-  const [open8, setOpen8] = useState(false);
   const [data, setData] = useState([]);
   const [Udata, setUdata] = useState([]);
   const [showEdit, setShowedit] = useState(false);
   const [list, setList] = useState(true);
   const [id,setId]=useState("");
+  const [patientID, setPatientId] = useState("");
+  const [Image,setImage]=useState([]);
+  const [Pdata, setPData] = useState({
+    Address: "",
+    BGroup: "",
+    DOB: "",
+    Email: "",
+    FName: "",
+    History:"",
+    Image: "",
+    LName: "",
+    MStatus: "",
+    Mobile: "",
+    Occupation: "",
+    id:"",
+    Sex:"",
+  });
 
   useEffect(() => {
     getData();
 
-  }, []);
+  }, [patientID]);
+
+  useEffect(() => {
+    const patientID = localStorage.getItem('patientid');
+ 
+     if(patientID != null)
+     {
+       setPatientId(patientID);
+     }
+     else{
+       navigate("/login");
+     }
+ 
+ 
+     const profileData = JSON.parse(localStorage.getItem("myProfile"));
+     setPData(profileData);
+ 
+ 
+   }, []);
+
 
 
   const AddHome = () =>{
@@ -53,7 +82,10 @@ const SheduleList = () => {
     navigate('/doctorslist');
   }
 
-  
+  const Logout = () => {
+    localStorage.removeItem('patientid');
+    navigate('/');
+  }
 
   
 
@@ -87,7 +119,7 @@ const SheduleList = () => {
     });
 
     const res = await response.json();
-    //console.log(res);
+    console.log(res);
     setData(res);
   };
 
@@ -118,6 +150,43 @@ const SheduleList = () => {
 
   
 
+  const onRequest = async(id)=>{
+      const dataS={
+        PatientId:Pdata.id,
+        DoctorId:id
+      }
+
+
+      const response = await fetch("http://127.0.0.1:8001/api/makeReq",{
+      method: "POST",
+      body: JSON.stringify(dataS),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 401) {
+      throw new Error("enter proper data");
+    }
+
+    if (!response.ok) {
+      throw new Error("Http failed with status", response.status);
+    }
+
+    const res = await response.text();
+    console.log(res);
+
+    if (res === "updated successfully") {
+      console.log("added successfully");
+    }
+
+
+
+
+      console.log(dataS);
+
+  }
+
   
       
     
@@ -133,185 +202,98 @@ const SheduleList = () => {
             <p className="title"> Health care</p>
           </div>
 
+          <div className="profDet">
+            <img
+              src={"http://127.0.0.1:8001/storage/" + Pdata.Image}
+              alt="Admin"
+              className="rounded-circle p-1 bg-primary profile"
+              width="150"
+            />
+
+          {Pdata && (
+              <p className="Dr">
+               {Pdata.FName} {Pdata.LName}
+              </p>
+            )}
+            <p className="line"></p>
+          </div>
+
+
+
           <Nav className="flex-column" defaultActiveKey={"#home"}>
             <Nav.Item>
-              <Nav.Item>
-                <Nav.Link
-                  href="#home"
-                  className="home text-light"
-                  aria-controls="bar-home"
-                  onClick={() => {
-                    setOpen1(false);
-                    setOpen2(false);
-                    setOpen3(false);
-                    setOpen4(false);
-                    setOpen5(false);
-                    setOpen6(false);
-                    setOpen7(false);
-                    setOpen8(!open8);
-                  }}
-                >
-                  <WidgetsIcon className="Icon" />
-                  Dashboard
-                  <ArrowDropDownIcon className="Icon1" />
-                </Nav.Link>{" "}
-                <Collapse in={open8} id="bar-doctor" className="navItem">
-                  <Card>
-                    <Card.Body>
-                      <Button
-                        variant="light"
-                        onClick={AddHome}
-                        style={{ marginLeft: "3vw" }}
-                      >
-                        MedBoard
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </Collapse>
-              </Nav.Item>
+              <Nav.Link
+                href="#home"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-home"
+                onClick={AddHome}
+              >
+                <WidgetsIcon className="Icon" />
+                Dashboard
+               
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#doctor"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-doctor"
-                onClick={() => {
-                  setOpen1(!open1);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+                
+                  onClick={DoctorList}
+                
               >
-                {" "}
                 <LocalHospitalIcon className="Icon" />
                 Doctor
-                <ArrowDropDownIcon className="Icon2" />
               </Nav.Link>
-
-              <Collapse in={open1} id="bar-doctor" className="navItem">
-                <Card>
-                  <Card.Body>
-                    
-                    <Button variant="light" onClick={DoctorList}>
-                      Doctor List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
-            
-            
             <Nav.Item>
               <Nav.Link
                 href="#doctorSchedule"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-schedule"
-                onClick={() => {
-                  setOpen4(!open4);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen1(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+               
+                  onClick={SheduleList}
+               
               >
                 <EventAvailableIcon className="Icon" />
                 Doctor Schedule
-                <ArrowDropDownIcon className="Icon5" />
               </Nav.Link>
-
-              <Collapse in={open4} id="bar-shedule" className="navItem">
-                <Card>
-                  <Card.Body>
-                    
-                    <Button variant="light" style={{ fontSize: "11px" }}>
-                      Schedule List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
+        
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#prescription"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-prescription"
-                onClick={() => {
-                  setOpen5(!open5);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen1(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+                onClick={PrescriptionList}
               >
-                {" "}
                 <MedicationIcon className="Icon" />
                 Prescription
-                <ArrowDropDownIcon className="Icon6" />
               </Nav.Link>
-              <Collapse in={open5} id="bar-prescription" className="navItem">
-                <Card>
-                  <Card.Body>
-                    
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "11px" }}
-                      onClick={PrescriptionList}
-                    >
-                      Prescription List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
-
             <Nav.Item>
               <Nav.Link
                 href="#appointment"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-appointment"
-                onClick={() => {
-                  setOpen6(!open6);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen1(false);
-                  setOpen7(false);
-                }}
+                onClick={AppointmentList}
               >
                 <AssignmentTurnedInIcon className="Icon" />
                 Appointment
-                <ArrowDropDownIcon className="Icon7" />
               </Nav.Link>
-              <Collapse in={open6} id="bar-appointment" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "10px" }}
-                      onClick={AddAppointment}
-                    >
-                      Add Appointment
-                    </Button>
-                    <Button
-                      variant="light"
-                      style={{ fontSize: "10px" }}
-                      onClick={AppointmentList}
-                    >
-                      Appointment List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
+      
             </Nav.Item>
-            
+            <Nav.Item>
+              <Nav.Link
+                href="#payement"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-payment"
+                onClick={Logout}
+              >
+                <LogoutIcon className="Icon" />
+                Logout
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
         </Col>
 
@@ -347,23 +329,33 @@ const SheduleList = () => {
                       <th>Day</th>
                       <th>Start time</th>
                       <th>End Time</th>
+                      <th>Appointment</th>
                      
                       
                     </thead>
                     <tbody>
-                      {Array.isArray(data) && data.map((item) => {
+                      {Array.isArray(data) && data.map((item,index) => {
                         const timeSlot = item.time.split("-");
                         const Stime = timeSlot[0];
                         const Etime = timeSlot[1];
 
                         return (
-                          <tr key={item.id}>
-                            <td>{item.id}</td>
+                          <tr key={index}>
+                            <td>{index+1}</td>
                             <td>{item.DoctorName}</td>
                             <td>{item.AddDepartment}</td>
                             <td>{item.day}</td>
                             <td>{Stime}</td>
                             <td>{Etime}</td>
+                            <td>
+                            <Button
+                              variant="danger"
+                              onClick={() => onRequest(item.DoctorId)}
+                            >
+                             
+                              Request
+                            </Button>
+                          </td>
                             
                           </tr>
                         );

@@ -441,6 +441,7 @@ const AddPatient = () =>{
                 <Card.Body className="ScrollViewPatienList">
                   <Table responsive="sm" hover>
                     <thead>
+                      <th>Patient id</th>
                       <th>Name</th>
                       <th>Address</th>
                       <th>Disease</th>
@@ -453,7 +454,7 @@ const AddPatient = () =>{
                     <tbody>
                     {data.map((item) => (
                               <tr key={item.id}>
-
+                                <td>{item.id}</td>
                                 <td>{item.FName} {item.LName}</td>
                                 <td>{item.Address}</td>
                                 <td>{item.PreferTo}</td>

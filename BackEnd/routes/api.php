@@ -9,6 +9,7 @@ use App\Http\Controllers\AddPrescription;
 use App\Http\Controllers\AddPatient;
 use App\Http\Controllers\AddDoctor;
 use App\Http\Controllers\LoginAll;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +89,7 @@ Route::get("/PatCount",[AddPatient::class,'count']);
 Route::get("/PatNewcount",[AddPatient::class,'Newcount']);
 Route::get("/PatNew",[AddPatient::class,'NewPatients']);
 Route::get("/getPatientData/{id}", [AddPatient::class,'getPatientData']);
+Route::put("/profileUpdate/{id}", [AddPatient::class,'PatientProfUpdate']);
 
 
 
@@ -111,6 +113,12 @@ Route::put("/ProfUpdate/{id}",[AddDoctor::class,'ProfUpdate']);
 
 Route::post("/loginAll",[LoginAll::class,'login']);
 Route::get("/index",[EnterPage::class,'index']);
+
+
+//make reqquest
+Route::post("/makeReq",[RequestController::class,'index']);
+Route::get("/viewReq",[RequestController::class,'view']);
+Route::delete("/deleteReq/{id}",[RequestController::class,'delete']);
 
 
 // Route::group(['middleware' => ['auth:patient']], function () {

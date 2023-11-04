@@ -38,6 +38,7 @@ const SheduleList = () => {
   const [list, setList] = useState(true);
   const [id,setId]=useState("");
   const [receivedData, setReceivedData] = useState(false);
+  
 
   useEffect(() => {
     getData();
@@ -232,6 +233,9 @@ const SheduleList = () => {
       }
     
   };
+
+
+  
   return (
     <>
     {receivedData &&(
@@ -559,6 +563,9 @@ const SheduleList = () => {
             className="scroll"
           >
             <Col lg={6} sm={12}>
+                
+
+
               <Card
                 className="table1"
                 style={{

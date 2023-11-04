@@ -1,5 +1,6 @@
 import { Col, Collapse, Nav, Row, Card, Button, Table } from "react-bootstrap";
 import "./Dashboard.css";
+import "./Edit.css";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import PersonIcon from "@mui/icons-material/Person";
 import LanIcon from "@mui/icons-material/Lan";
@@ -9,51 +10,63 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useHistory } from 'react-router-dom';
 
 const DashBoard = () => {
   const navigate = useNavigate();
-  const [open1, setOpen1] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
-  const [open4, setOpen4] = useState(false);
-  const [open5, setOpen5] = useState(false);
-  const [open6, setOpen6] = useState(false);
-  const [open7, setOpen7] = useState(false);
-  const [open8, setOpen8] = useState(false);
   const [DoctorCount, setDoctorCount] = useState("");
-  const [PatientCount, setPatientCount] = useState("");
-  const [PatientNewCount, setPatientNewCount] = useState("");
-  const [AppointmentCount, setAppointmentCount] = useState("");
-  const [Appointments, setAppointments] = useState([]);
-  const [NewPatients, setNewPatients] = useState([]);
-  const [Doctors, setDoctors] = useState([]);
-  const [Total, setTotal] = useState();
   const [data, setData] = useState([]);
+  const [patientID, setPatientId] = useState("");
 
-  const [patientData, setPatientData] = useState([]);
-  const [editMode, setEditMode] = useState(false);
-  const patientID = localStorage.getItem('patientid');
-
-  const [formData, setFormData] = useState({
-    FName: "",
-    LName: "",
-    Email: "",
+  const [Pdata, setPData] = useState({
     Address: "",
-    Image: null,
+    BGroup: "",
+    DOB: "",
+    Email: "",
+    FName: "",
+    History:"",
+    Image: "",
+    LName: "",
+    MStatus: "",
+    Mobile: "",
+    Occupation: "",
+    id:"",
+    Sex:"",
   });
 
-  const logout = () => {
+  const [patientData, setPatientData] = useState([]);
+ 
+
+  const Logout = () => {
     localStorage.removeItem('patientid');
     navigate('/');
   }
 
   useEffect(() => {
+   const patientID = localStorage.getItem('patientid');
+
+    if(patientID != null)
+    {
+      setPatientId(patientID);
+    }
+    else{
+      navigate("/login");
+    }
+
+
+    const profileData = JSON.parse(localStorage.getItem("myProfile"));
+    setPData(profileData);
+
+
+  }, []);
+
+  useEffect(() => {
     getPatientData()
     getData();
 
-  }, []);
+  }, [patientID]);
 
   const getPatientData = async () => {
     const response = await fetch(`http://127.0.0.1:8001/api/getPatientData/${patientID}`, {
@@ -87,10 +100,6 @@ const DashBoard = () => {
     navigate('/doctorslist');
   }
 
-  const AddAppointment = () => {
-    navigate('/appointPatient')
-  }
-
   const AppointmentList = () => {
     navigate('/appoinmentslist')
   }
@@ -120,50 +129,58 @@ const DashBoard = () => {
     }
   }
 
-  const getDoctors = async () => {
-    const response = await fetch("http://127.0.0.1:8001/api/Dview", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+  const HandleChange = (e) => {
+    const { name, value } = e.target;
 
-    const res = await response.json();
+    console.log(e.target.value);
+
+    setPData((list) => ({
+      ...list,
+      [name]: value,
+    }));
+  };
+
+  const Onupdate = async (e) => {
+    e.preventDefault();
+
+    const dataS = {
+      FName: Pdata.FName,
+      LName: Pdata.LName,
+      Email: Pdata.Email,
+      Address: Pdata.Address,
+      Mobile: Pdata.Mobile,
+      DOB: Pdata.DOB
+    };
+
+    console.log(dataS);
+
+    const response = await fetch(
+      "http://127.0.0.1:8001/api/profileUpdate/"+Pdata.id,
+      {
+        method: "PUT",
+        body: JSON.stringify(dataS),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 401) {
+      throw new Error("enter proper data");
+    }
 
     if (!response.ok) {
-      console.log("Error");
-    } else {
-      setDoctors(res);
+      throw new Error("Http failed with status", response.status);
     }
-  }
 
-  const updateProfile = async () => {
-    const response = await fetch(`http://127.0.0.1:8001/api/updatePro/${patientID}`, {
-      method: "POST",
-	  body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-     
-    });
+    const res = await response.text();
+    console.log(res);
 
-    if (response.ok) {
-      toggleEditMode();
-      getPatientData(); // Update patientData after the profile is updated
-    } else {
-      console.error("Profile update failed.");
+    if (res === "updated successfully") {
+      console.log("success");
+      
     }
   };
-
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({ ...formData, [name]: files ? files[0] : value });
-  };
-
-  const toggleEditMode = () => {
-    setEditMode(!editMode);
-  }
-
   return (
     <>
       <Row className="mt-1 row">
@@ -172,154 +189,103 @@ const DashBoard = () => {
             <p className="title">Health care</p>
           </div>
 
+          <div className="profDet">
+            <img
+              src={"http://127.0.0.1:8001/storage/" + Pdata.Image}
+              alt="Admin"
+              className="rounded-circle p-1 bg-primary profile"
+              width="150"
+            />
+          
+
+          {Pdata && (
+              <p className="Dr">
+                {Pdata.FName} {Pdata.LName}
+              </p>
+            )}
+            <p className="line"></p>
+          </div>
+
+
+
           <Nav className="flex-column" defaultActiveKey={"#home"}>
             <Nav.Item>
               <Nav.Link
                 href="#home"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-home"
-                onClick={() => {
-                  setOpen1(false);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                  setOpen8(!open8);
-                }}
+                onClick={AddHome}
               >
                 <WidgetsIcon className="Icon" />
                 Dashboard
-                <ArrowDropDownIcon className="Icon1" />
+               
               </Nav.Link>
-              <Collapse in={open8} id="bar-doctor" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button variant="light" onClick={AddHome} style={{ marginLeft: "3vw" }}>MedBoard</Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#doctor"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-doctor"
-                onClick={() => {
-                  setOpen1(!open1);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+                
+                  onClick={DoctorList}
+                
               >
                 <LocalHospitalIcon className="Icon" />
                 Doctor
-                <ArrowDropDownIcon className="Icon2" />
               </Nav.Link>
-              <Collapse in={open1} id="bar-doctor" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button variant="light" onClick={DoctorList}>Doctor List</Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#doctorSchedule"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-schedule"
-                onClick={() => {
-                  setOpen4(!open4);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen1(false);
-                  setOpen5(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+               
+                  onClick={SheduleList}
+               
               >
                 <EventAvailableIcon className="Icon" />
                 Doctor Schedule
-                <ArrowDropDownIcon className="Icon5" />
               </Nav.Link>
-              <Collapse in={open4} id="bar-shedule" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button variant="light" style={{ fontSize: "11px" }} onClick={SheduleList}>
-                      Schedule List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
+        
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#prescription"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-prescription"
-                onClick={() => {
-                  setOpen5(!open5);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen1(false);
-                  setOpen6(false);
-                  setOpen7(false);
-                }}
+                onClick={PrescriptionList}
               >
                 <MedicationIcon className="Icon" />
                 Prescription
-                <ArrowDropDownIcon className="Icon6" />
               </Nav.Link>
-              <Collapse in={open5} id="bar-prescription" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button variant="light" style={{ fontSize: "11px" }} onClick={PrescriptionList}>
-                      Prescription List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 href="#appointment"
-                className="home text-light"
+                className={`home text-light nav-link-hover`}
                 aria-controls="bar-appointment"
-                onClick={() => {
-                  setOpen6(!open6);
-                  setOpen2(false);
-                  setOpen3(false);
-                  setOpen4(false);
-                  setOpen5(false);
-                  setOpen1(false);
-                  setOpen7(false);
-                }}
+                onClick={AppointmentList}
               >
                 <AssignmentTurnedInIcon className="Icon" />
                 Appointment
-                <ArrowDropDownIcon className="Icon7" />
               </Nav.Link>
-              <Collapse in={open6} id="bar-appointment" className="navItem">
-                <Card>
-                  <Card.Body>
-                    <Button variant="light" style={{ fontSize: "10px" }} onClick={AddAppointment}>
-                      Add Appointment
-                    </Button>
-                    <Button variant="light" style={{ fontSize: "10px" }} onClick={AppointmentList}>
-                      Appointment List
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Collapse>
+      
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                href="#payement"
+                className={`home text-light nav-link-hover`}
+                aria-controls="bar-payment"
+                onClick={Logout}
+              >
+                <LogoutIcon className="Icon" />
+                Logout
+              </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
+        
+        
         <Col
           xxs={10}
           md={8}
@@ -330,90 +296,151 @@ const DashBoard = () => {
           sm={7}
           className="colScrollView"
         >
-          <Card className="patientProfileCard">
-            <button className="logoutButton" onClick={logout}>
-              Logout
-            </button>
-            <div className="profileContent">
-              <div className="profileDetails">
-                <h1 className="profileTitle">Patient Profile</h1>
-                {editMode ? (
-                  <form className="profileEditForm">
-                    <label>
-                      First Name
-                      <input
-                        type="text"
-                        name="FName"
-                        value={formData.FName}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      Last Name
-                      <input
-                        type="text"
-                        name="LName"
-                        value={formData.LName}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      Email
-                      <input
-                        type="text"
-                        name="Email"
-                        value={formData.Email}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      Address
-                      <input
-                        type="text"
-                        name="Address"
-                        value={formData.Address}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <label>
-                      Profile Photo
-                      <input
-                        type="file"
-                        name="Image"
-                        accept="image/*"
-                        onChange={handleInputChange}
-                      />
-                    </label>
-                    <div>
-                      <button onClick={updateProfile} className="btn btn-primary">
-                        Save
-                      </button><br/><br/>
+          <Row className="mt-5">
+            <Col lg={9} sm={12}>
+              <div style={{ marginTop: "40px", marginLeft: "75px" }}>
+                <div class="container">
+                  <div class="main-body">
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="card11" style={{ height: "24.5em" }}>
+                          <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                              <img
+                                
+                                  src={"http://127.0.0.1:8001/storage/"+Pdata.Image}
+                              
+                                alt="Admin"
+                                class="rounded-circle p-1 bg-primary"
+                                width="110"
+                              />
+                              <div class="mt-3">
+                                <h4>
+                                  {Pdata.FName} {Pdata.LName}
+                                </h4>
+                                <p class="text-secondary mb-1">
+                                  {Pdata.Sex}
+                                </p>
+                                <p class="text-muted font-size-sm">
+                                  {Pdata.Address}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-8">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row mb-3">
+                              <div class="col-sm-3">
+                                <h6 class="mb-0">First Name</h6>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={Pdata.FName}
+                                  name="FName"
+                                  onChange={HandleChange}
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-3">
+                                <h6 class="mb-0">Last Name</h6>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={Pdata.LName}
+                                  name="LName"
+                                  onChange={HandleChange}
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={Pdata.Email}
+                                  name="Email"
+                                  onChange={HandleChange}
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={Pdata.Mobile}
+                                  name="Mobile"
+                                  onChange={HandleChange}
+                                />
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-3">
+                                <h6 class="mb-0">Address</h6>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={Pdata.Address}
+                                  name="Address"
+                                  onChange={HandleChange}
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row mb-3">
+                              <div class="col-sm-3">
+                                <h6 class="mb-0">DOB</h6>
+                              </div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={Pdata.DOB}
+                                  name="DOB"
+                                  onChange={HandleChange}
+                                />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-3"></div>
+                              <div class="col-sm-9 text-secondary">
+                                <input
+                                  type="button"
+                                  class="btn btn-primary px-4"
+                                  value="Save Changes"
+                                  onClick={Onupdate}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </form>
-                ) : (
-                  <div>
-                    <p className="profileInfo">Id: {patientData.id}</p>
-                    <p className="profileInfo">Name: {patientData.FName} {patientData.LName}</p>
-                    <p className="profileInfo">Email: {patientData.Email}</p>
-                    <p className="profileInfo">Address: {patientData.Address}</p>
                   </div>
-                )}
-                <div>
-                  <button onClick={toggleEditMode} className="btn btn-primary">
-                    {editMode ? 'Cancel' : 'Edit Profile'}
-                  </button>
                 </div>
               </div>
-              <div className="profileImageContainer">
-                <img
-                  id="profileImage"
-                  src={"http://127.0.0.1:8001/storage/" + (formData.Image || patientData.Image)}
-                  alt="Patient"
-                  className="profileImage"
-                />
-              </div>
-            </div>
-          </Card>
+            </Col>
+          </Row>
+          
+          
+          
+      <Row>   
           <Card className="table1 mb-5 mt-5" style={{ boxShadow: "0px 0px 5px 0px", width: "500px" }}>
             <Card.Header className="cardHeader" style={{ padding: "20px" }}>
               Your Upcoming Appointment
@@ -430,6 +457,7 @@ const DashBoard = () => {
                 ))}
             </Card.Body>
           </Card>
+          </Row> 
         </Col>
       </Row>
     </>
