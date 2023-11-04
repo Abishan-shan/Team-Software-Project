@@ -13,7 +13,7 @@ class EnterPage extends Controller
     {
         //
 
-        return "hi i love u";
+        return "";
     }
 
     /**

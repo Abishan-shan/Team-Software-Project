@@ -77,6 +77,19 @@ class AddPrescription extends Controller
 
         return $result;
     }
+	
+	public function PPview(string $patientID)
+	{
+		$prescriptions = Prescription::where('PatientId', $patientID)->get();
+
+		if ($prescriptions->isEmpty()) {
+			return response()->json(['message' => 'No prescriptions found for the given patient ID'], 404);
+		}
+
+		return response()->json($prescriptions);
+	}
+
+	
     public function create()
     {
         //

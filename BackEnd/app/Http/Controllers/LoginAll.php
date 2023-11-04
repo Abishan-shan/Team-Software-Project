@@ -8,7 +8,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
-
+use Auth;
 class LoginAll extends Controller
 {
     //
@@ -50,6 +50,7 @@ class LoginAll extends Controller
                 
                 if($userPatient && Hash::check($req->Password, $userPatient->Password))
                 {
+					session(['user' => $userPatient]);
                     return $userPatient;
     
                 }

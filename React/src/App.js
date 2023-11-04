@@ -21,8 +21,12 @@ import DoctorDash from "./DoctorDashboard/DoctorDash"
 import Profile from "./DoctorDashboard/Profile"
 import Appointment from "./DoctorDashboard/Appointment";
 import Schedule from "./DoctorDashboard/Schedule";
-
-
+import AppointmentPatient from "./PatientDashboard/AddAppointment";
+import PatientDashBoard from "./PatientDashboard/Dashboard";
+import DisplayDoctorList from "./PatientDashboard/DoctorList";
+import AppointmentPatientList from "./PatientDashboard/AppontmentList";
+import DisplayPresList from "./PatientDashboard/PrescriptionList";
+import DisplayDoctorShedule from "./PatientDashboard/SheduleList";
 
 
 function App() {
@@ -52,6 +56,15 @@ function App() {
         <Route path="/Doctor/Appointment"   element={<Appointment />}/>
         <Route path="/Doctor/Schedule"   element={<Schedule />}/>
         
+       
+		
+		
+        <Route path="/patientDashbord" element={<PatientDashBoard />} />
+        <Route path="/appointPatient" element={<AppointmentPatient />}/>
+		<Route path="/appoinmentslist" element={<AppointmentPatientList />}/>
+		<Route path="/doctorslist" element={<DisplayDoctorList />}/>
+        <Route path="/priscriptionslist" element={<DisplayPresList />}/>
+		<Route path="/Doctorscheduleslist" element={<DisplayDoctorShedule />}/>
         
       </Routes>
   )

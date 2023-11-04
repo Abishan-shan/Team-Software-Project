@@ -8,6 +8,7 @@ use App\Models\Patient;
 use Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Auth;
 
 class AddAppointment extends Controller
 {
@@ -80,6 +81,18 @@ class AddAppointment extends Controller
 
         return $result;
     }
+	public function APview(string $patientID)
+	{
+		$appointments = Appointment::where('PatientId', $patientID)->get();
+
+		if ($appointments->isEmpty()) {
+			return response()->json(['message' => 'No appointments found for the given patient ID'], 404);
+		}
+
+		return response()->json($appointments);
+	}
+	
+    
     public function create()
     {
         //
@@ -89,6 +102,21 @@ class AddAppointment extends Controller
     /**
      * Store a newly created resource in storage.
      */
+	 
+	 public function APDview(string $patientID)
+	{
+		$today = now()->format('Y-m-d');
+		$appointments = Appointment::where('PatientId', $patientID)
+			->where('Date', '>=', $today)
+			->get();
+
+		if ($appointments->isEmpty()) {
+			return response()->json(['message' => 'No appointments found for today and the future'], 404);
+		}
+
+		return response()->json($appointments);
+	}
+	
     public function store(Request $request)
     {
         //
@@ -268,4 +296,7 @@ public function appointmentDoc(string $DocName)
 
             return $count;
     }
+	
+	
+
 }
